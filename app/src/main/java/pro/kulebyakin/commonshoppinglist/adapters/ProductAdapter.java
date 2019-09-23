@@ -35,19 +35,19 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         productViewHolder.scoreTextView.setText(Integer.toString(product.unitPrice));
         productViewHolder.ratingTextView.setText((position + 1) + ".");
 
-        if (product.userImageURL != null) {
-            Picasso.get().load(product.userImageURL).into(productViewHolder.userImage);
-        } else {
-            productViewHolder.userImage.setImageResource(R.drawable.horse);
-        }
-
-        productViewHolder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-            @Override
-            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                menu.add(productViewHolder.getAdapterPosition(), 0, 0, "Удалить");
-                menu.add(productViewHolder.getAdapterPosition(), 1, 0, "Изменииь");
-            }
-        });
+//        if (product.userImageURL != null) {
+//            Picasso.get().load(product.userImageURL).into(productViewHolder.userImage);
+//        } else {
+//            productViewHolder.userImage.setImageResource(R.drawable.horse);
+//        }
+//
+//        productViewHolder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+//            @Override
+//            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+//                menu.add(productViewHolder.getAdapterPosition(), 0, 0, "Удалить");
+//                menu.add(productViewHolder.getAdapterPosition(), 1, 0, "Изменииь");
+//            }
+//        });
 
     }
 
