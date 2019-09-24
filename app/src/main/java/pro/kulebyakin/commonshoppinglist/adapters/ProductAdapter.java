@@ -31,10 +31,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder productViewHolder, int position) {
         Product product = list.get(position);
 
+
         productViewHolder.productNameTextView.setText(product.productName);
         productViewHolder.productPriceTextView.setText(Integer.toString(product.productPrice));
 
 
+//        if (product.userImageURL != null) {
+//            Picasso.get().load(product.userImageURL).into(productViewHolder.userImage);
+//        } else {
+//            productViewHolder.userImage.setImageResource(R.drawable.horse);
+//        }
+//
 //        productViewHolder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
 //            @Override
 //            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
