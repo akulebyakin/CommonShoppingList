@@ -31,23 +31,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder productViewHolder, int position) {
         Product product = list.get(position);
 
-        productViewHolder.nameTextView.setText(product.productName);
-        productViewHolder.scoreTextView.setText(Integer.toString(product.unitPrice));
-        productViewHolder.ratingTextView.setText((position + 1) + ".");
+        productViewHolder.productNameTextView.setText(product.productName);
+        productViewHolder.productPriceTextView.setText(Integer.toString(product.productPrice));
 
-        if (product.userImageURL != null) {
-            Picasso.get().load(product.userImageURL).into(productViewHolder.userImage);
-        } else {
-            productViewHolder.userImage.setImageResource(R.drawable.horse);
-        }
 
-        productViewHolder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-            @Override
-            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                menu.add(productViewHolder.getAdapterPosition(), 0, 0, "Удалить");
-                menu.add(productViewHolder.getAdapterPosition(), 1, 0, "Изменииь");
-            }
-        });
+//        productViewHolder.itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+//            @Override
+//            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+//                menu.add(productViewHolder.getAdapterPosition(), 0, 0, "Удалить");
+//                menu.add(productViewHolder.getAdapterPosition(), 1, 0, "Изменииь");
+//            }
+//        });
 
     }
 
@@ -58,16 +52,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView ratingTextView, nameTextView, scoreTextView;
-        ImageView userImage;
+        TextView productNameTextView, productPriceTextView;
+        ImageView productImage;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            ratingTextView = itemView.findViewById(R.id.rating_text_view);
-            nameTextView = itemView.findViewById(R.id.name_text_view);
-            scoreTextView = itemView.findViewById(R.id.score_text_view);
-            userImage = itemView.findViewById(R.id.user_image);
+            productNameTextView = itemView.findViewById(R.id.product_name);
+            productPriceTextView = itemView.findViewById(R.id.product_price);
+            productImage = itemView.findViewById(R.id.product_image);
 
         }
     }

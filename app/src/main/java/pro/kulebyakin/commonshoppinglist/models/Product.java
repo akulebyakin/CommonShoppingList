@@ -3,7 +3,7 @@ package pro.kulebyakin.commonshoppinglist.models;
 public class Product {
 
     public String productName;
-    public int unitPrice;
+    public int productPrice;
     public int unitQuantity;
 
     public Product() {
@@ -12,7 +12,7 @@ public class Product {
 
     public Product(String productName, int unitPrice, int unitQuantity) {
         this.productName = productName;
-        this.unitPrice = unitPrice;
+        this.productPrice = unitPrice;
         this.unitQuantity = unitQuantity;
     }
 
