@@ -1,19 +1,24 @@
 package pro.kulebyakin.commonshoppinglist.models;
 
+import android.graphics.drawable.Drawable;
+
 public class Product {
 
-    public String productName;
-    public int productPrice;
-    public int unitQuantity;
+    public int image;
+    public Drawable imageDrw;
+    public String name;
+    public boolean expanded = false;
+    public boolean parent = false;
+
+    // flag when item swiped
+    public boolean swiped = false;
 
     public Product() {
-        // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Product(String productName, int unitPrice, int unitQuantity) {
-        this.productName = productName;
-        this.productPrice = unitPrice;
-        this.unitQuantity = unitQuantity;
+    public Product(int image, String name) {
+        this.image = image;
+        this.name = name;
     }
 
 }
