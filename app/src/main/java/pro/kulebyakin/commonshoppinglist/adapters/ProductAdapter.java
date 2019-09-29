@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -130,6 +131,11 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     return false;
                 }
             });
+
+            AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+            anim.setDuration(1000);
+            view.startAnimation(anim);
+
         }
     }
 

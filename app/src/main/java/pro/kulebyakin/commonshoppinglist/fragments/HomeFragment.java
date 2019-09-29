@@ -14,8 +14,12 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -93,7 +97,7 @@ public class HomeFragment extends Fragment {
                 obj.image = drw_arr.getResourceId(randomNum, -1);
                 obj.name = productEditText.getText().toString();
                 obj.imageDrw = getActivity().getResources().getDrawable(obj.image);
-                items.add(obj);
+                items.add(0, obj);
                 mAdapter.notifyDataSetChanged();
                 productEditText.setText("");
             }
