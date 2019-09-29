@@ -1,6 +1,5 @@
 package pro.kulebyakin.commonshoppinglist;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -9,6 +8,9 @@ import android.support.annotation.NonNull;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import pro.kulebyakin.commonshoppinglist.fragments.DashboardFragment;
 import pro.kulebyakin.commonshoppinglist.fragments.HomeFragment;
 import pro.kulebyakin.commonshoppinglist.fragments.NotificationsFragment;
@@ -16,7 +18,11 @@ import pro.kulebyakin.commonshoppinglist.fragments.TestOneFragment;
 import pro.kulebyakin.commonshoppinglist.fragments.TestTwoFragment;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String PRODUCTS_CHILD = "products";
+
     private TextView mTextMessage;
+    private DatabaseReference myRef;
+    private FirebaseDatabase database;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -60,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
     }
 
 }

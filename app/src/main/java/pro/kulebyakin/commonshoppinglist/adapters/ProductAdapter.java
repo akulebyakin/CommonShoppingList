@@ -1,17 +1,20 @@
 package pro.kulebyakin.commonshoppinglist.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import pro.kulebyakin.commonshoppinglist.R;
 import pro.kulebyakin.commonshoppinglist.helpers.DragItemTouchHelper;
@@ -23,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdapter.OriginalViewHolder>
         implements SwipeItemTouchHelper.SwipeHelperAdapter, DragItemTouchHelper.MoveHelperAdapter  {
 
     private List<Product> items = new ArrayList<>();
@@ -32,6 +35,19 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Context ctx;
     private OnItemClickListener mOnItemClickListener;
     private OnStartDragListener mDragStartListener = null;
+
+    /**
+     * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
+     * {@link FirebaseRecyclerOptions} for configuration options.
+     *
+     * @param options
+     */
+    public ProductAdapter(@NonNull FirebaseRecyclerOptions<Product> options,
+                          Context context, List<Product> items) {
+        super(options);
+        this.items = items;
+        ctx = context;
+    }
 
     public interface OnItemClickListener {
         void onItemClick(View view, Product obj, int position);
@@ -45,10 +61,10 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         this.mOnItemClickListener = mItemClickListener;
     }
 
-    public ProductAdapter(Context context, List<Product> items) {
-        this.items = items;
-        ctx = context;
-    }
+//    public ProductAdapter(Context context, List<Product> items) {
+//        this.items = items;
+//        ctx = context;
+//    }
 
     public void setDragListener(OnStartDragListener dragStartListener) {
         this.mDragStartListener = dragStartListener;
@@ -81,23 +97,48 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder vh;
+    public OriginalViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        OriginalViewHolder vh;
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item, parent, false);
         vh = new OriginalViewHolder(v);
         return vh;
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                for (Product s : items_swiped) {
+                    int index_removed = items.indexOf(s);
+                    if (index_removed != -1) {
+                        items.remove(index_removed);
+                        notifyItemRemoved(index_removed);
+                    }
+                }
+                items_swiped.clear();
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+        super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+
+    @Override
+    protected void onBindViewHolder(@NonNull final OriginalViewHolder holder, final int position, @NonNull Product model) {
         if (holder instanceof OriginalViewHolder) {
             final OriginalViewHolder view = (OriginalViewHolder) holder;
 
             final Product p = items.get(position);
             view.name.setText(p.name);
-            Tools.displayImageOriginal(ctx, view.image, p.image);
+//            Tools.displayImageOriginal(ctx, view.image, p.image);
             view.lyt_parent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -132,35 +173,12 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             });
 
-            AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
-            anim.setDuration(1000);
-            view.startAnimation(anim);
 
         }
     }
 
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                for (Product s : items_swiped) {
-                    int index_removed = items.indexOf(s);
-                    if (index_removed != -1) {
-                        items.remove(index_removed);
-                        notifyItemRemoved(index_removed);
-                    }
-                }
-                items_swiped.clear();
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
-        super.onAttachedToRecyclerView(recyclerView);
-    }
-
-    @Override
-    public int getItemCount() {
-        return items.size();
+    public void deleteItem (int position) {
+        getSnapshots().getSnapshot(position).getRef().removeValue();
     }
 
     @Override
@@ -173,10 +191,11 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onItemDismiss(int position) {
 
-        // handle when double swipe
+//         handle when double swipe
         if (items.get(position).swiped) {
             items_swiped.remove(items.get(position));
             items.remove(position);
+            deleteItem(position);
             notifyItemRemoved(position);
             return;
         }

@@ -41,6 +41,15 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation 'com.google.firebase:firebase-messaging:18.0.0'
 
+    // FirebaseUI for Firebase Realtime Database
+    implementation 'com.firebaseui:firebase-ui-database:4.1.0'
+    // FirebaseUI for Cloud Firestore
+    implementation 'com.firebaseui:firebase-ui-firestore:4.1.0'
+    // FirebaseUI for Firebase Auth
+    implementation 'com.firebaseui:firebase-ui-auth:4.1.0'
+    // FirebaseUI for Cloud Storage
+    implementation 'com.firebaseui:firebase-ui-storage:4.1.0'
+
 //    // firebase new versions
 //    implementation platform('com.google.firebase:firebase-bom:22.3.0')
 //    implementation 'com.google.firebase:firebase-core:17.2.0'
@@ -60,7 +69,7 @@ dependencies {
 
     // third party dependencies -------------------------------------------------------------------
     implementation 'com.balysv:material-ripple:1.0.2'                  // ripple effect
-    implementation 'com.github.bumptech.glide:glide:3.7.0'             // image loader
+    implementation 'com.github.bumptech.glide:glide:4.8.0'             // image loader
     implementation 'com.wdullaer:materialdatetimepicker:3.2.0'         // date & time picker
     implementation 'com.mikhaellopez:circularimageview:3.2.0'          // circle image view
 //    implementation 'com.github.pchmn:MaterialChipsInput:1.0.5'         // material chip

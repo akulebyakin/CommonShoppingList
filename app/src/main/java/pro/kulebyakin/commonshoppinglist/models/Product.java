@@ -20,5 +20,31 @@ public class Product {
         this.image = image;
         this.name = name;
     }
+    public Product(String name) {
+        this.name = name;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public Drawable getImageDrw() {
+        return imageDrw;
+    }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
+    public boolean isParent() {
+        return parent;
+    }
+
+    public boolean isSwiped() {
+        return swiped;
+    }
 }
