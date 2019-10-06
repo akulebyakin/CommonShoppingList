@@ -17,8 +17,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
 import pro.kulebyakin.commonshoppinglist.R;
-import pro.kulebyakin.commonshoppinglist.helpers.DragItemTouchHelper;
-import pro.kulebyakin.commonshoppinglist.helpers.SwipeItemTouchHelper;
 import pro.kulebyakin.commonshoppinglist.helpers.ProductTouchHelper;
 import pro.kulebyakin.commonshoppinglist.models.Product;
 import pro.kulebyakin.commonshoppinglist.utils.Tools;
@@ -28,7 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdapter.OriginalViewHolder>
-        implements SwipeItemTouchHelper.SwipeHelperAdapter, DragItemTouchHelper.MoveHelperAdapter {
+        implements ProductTouchHelper.TouchHelperAdapter {
 
     private List<Product> items = new ArrayList<>();
     private List<Product> items_swiped = new ArrayList<>();
@@ -71,7 +69,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
         this.mDragStartListener = dragStartListener;
     }
 
-    public class OriginalViewHolder extends RecyclerView.ViewHolder implements SwipeItemTouchHelper.TouchViewHolder {
+    public class OriginalViewHolder extends RecyclerView.ViewHolder implements ProductTouchHelper.TouchViewHolder {
         public ImageView image;
         public TextView name;
         public TextView quantity;

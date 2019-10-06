@@ -33,7 +33,7 @@ import java.util.List;
 import pro.kulebyakin.commonshoppinglist.R;
 import pro.kulebyakin.commonshoppinglist.adapters.ProductAdapter;
 import pro.kulebyakin.commonshoppinglist.data.DataGenerator;
-import pro.kulebyakin.commonshoppinglist.helpers.SwipeItemTouchHelper;
+import pro.kulebyakin.commonshoppinglist.helpers.ProductTouchHelper;
 import pro.kulebyakin.commonshoppinglist.models.Product;
 
 public class HomeFragment extends Fragment {
@@ -173,7 +173,7 @@ public class HomeFragment extends Fragment {
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(mLinearLayoutManager);
 
-        ItemTouchHelper.Callback callback = new SwipeItemTouchHelper(mAdapter);
+        ItemTouchHelper.Callback callback = new ProductTouchHelper(mAdapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(recyclerView);
     }

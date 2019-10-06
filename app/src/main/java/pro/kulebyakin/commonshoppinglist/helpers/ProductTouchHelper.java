@@ -128,7 +128,6 @@ public class ProductTouchHelper extends ItemTouchHelper.Callback {
 
     public interface TouchViewHolder {
         void onItemSelected();
-
         void onItemClear();
     }
 }
