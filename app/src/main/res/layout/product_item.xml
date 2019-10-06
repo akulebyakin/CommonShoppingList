@@ -25,6 +25,7 @@
                 android:background="@color/colorBackground" />
 
             <LinearLayout
+                android:id="@+id/ll"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -54,18 +55,28 @@
                     android:text="Item Title"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/colorOnBackground" />
+                <TextView
+                    android:id="@+id/quantity"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:text="42"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/colorOnBackground" />
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:text="333 р"
+                    android:gravity="right"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/colorOnBackground" />
 
                 <View
                     android:layout_width="@dimen/spacing_large"
                     android:layout_height="wrap_content" />
-
-                <ImageButton
-                    android:id="@+id/bt_move"
-                    android:layout_width="?attr/actionBarSize"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@android:color/transparent"
-                    android:tint="@color/grey_40"
-                    app:srcCompat="@drawable/ic_compare_arrows_black_24dp" />
 
             </LinearLayout>
 

@@ -33,6 +33,32 @@
                 android:textColor="@color/colorMenuItemActive"
                 android:textColorHint="@color/edit_text_color_text"
                 android:textSize="20sp" />
+            <EditText
+                android:id="@+id/product_edit_quantity"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:maxLines="1"
+                android:hint="шт"
+                android:layout_weight="0.3"
+                android:backgroundTint="@color/edit_text_color_tint"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/colorMenuItemActive"
+                android:textColorHint="@color/edit_text_color_text"
+                android:textSize="20sp" />
+            <EditText
+                android:id="@+id/product_edit_price"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:maxLines="1"
+                android:layout_weight="0.3"
+                android:hint="Цена"
+                android:backgroundTint="@color/edit_text_color_tint"
+                android:fontFamily="sans-serif"
+                android:textColor="@color/colorMenuItemActive"
+                android:textColorHint="@color/edit_text_color_text"
+                android:textSize="20sp" />
 
             <ImageButton
                 android:id="@+id/product_send_text"

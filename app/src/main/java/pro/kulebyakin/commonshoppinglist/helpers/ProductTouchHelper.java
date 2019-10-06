@@ -1,17 +1,22 @@
 package pro.kulebyakin.commonshoppinglist.helpers;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.View;
 
-public class DragItemTouchHelper extends ItemTouchHelper.Callback {
+public class ProductTouchHelper extends ItemTouchHelper.Callback {
 
     public static final float ALPHA_FULL = 1.0f;
+    private int bgColorCode = Color.BLACK;
 
-    private final MoveHelperAdapter mAdapter;
+    private final TouchHelperAdapter mAdapter;
 
-    public DragItemTouchHelper(MoveHelperAdapter adapter) {
+    public ProductTouchHelper (TouchHelperAdapter adapter) {
         mAdapter = adapter;
     }
 
@@ -20,9 +25,10 @@ public class DragItemTouchHelper extends ItemTouchHelper.Callback {
         return true;
     }
 
+
     @Override
     public boolean isItemViewSwipeEnabled() {
-        return false;
+        return true;
     }
 
     @Override
@@ -52,6 +58,8 @@ public class DragItemTouchHelper extends ItemTouchHelper.Callback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int i) {
+        // Notify the adapter of the dismissal
+        mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
     }
 
     @Override
@@ -62,6 +70,17 @@ public class DragItemTouchHelper extends ItemTouchHelper.Callback {
             final float alpha = ALPHA_FULL - Math.abs(dX) / (float) viewHolder.itemView.getWidth();
             viewHolder.itemView.setAlpha(alpha);
             viewHolder.itemView.setTranslationX(dX);
+
+            View itemView = viewHolder.itemView;
+            Drawable background = new ColorDrawable();
+            ((ColorDrawable) background).setColor(getBgColorCode());
+
+            if (dX > 0) { // swipe right
+                background.setBounds(itemView.getLeft(), itemView.getTop(), (int) dX, itemView.getBottom());
+            } else { // swipe left
+                background.setBounds(itemView.getRight() + (int) dX, itemView.getTop(), itemView.getRight(), itemView.getBottom());
+            }
+            background.draw(c);
         } else {
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
         }
@@ -94,7 +113,16 @@ public class DragItemTouchHelper extends ItemTouchHelper.Callback {
         }
     }
 
-    public interface MoveHelperAdapter {
+    public int getBgColorCode() {
+        return bgColorCode;
+    }
+
+    public void setBgColorCode(int bgColorCode) {
+        this.bgColorCode = bgColorCode;
+    }
+
+    public interface TouchHelperAdapter {
+        void onItemDismiss(int position);
         boolean onItemMove(int fromPosition, int toPosition);
     }
 

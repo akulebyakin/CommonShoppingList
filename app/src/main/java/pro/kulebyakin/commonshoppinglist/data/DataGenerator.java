@@ -39,7 +39,7 @@ public class DataGenerator {
             Product obj = new Product();
             obj.image = drw_arr.getResourceId(i, -1);
             obj.name = name_arr[i];
-            obj.imageDrw = ctx.getResources().getDrawable(obj.image);
+//            obj.imageDrw = ctx.getResources().getDrawable(obj.image);
             items.add(obj);
         }
         Collections.shuffle(items);

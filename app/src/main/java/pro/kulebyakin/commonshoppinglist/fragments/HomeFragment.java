@@ -45,6 +45,8 @@ public class HomeFragment extends Fragment {
     private ProductAdapter mAdapter;
     private ItemTouchHelper mItemTouchHelper;
     private EditText productEditText;
+    private EditText productEditQuantity;
+    private EditText productEditPrice;
     private ImageButton sendButton;
     private LinearLayoutManager mLinearLayoutManager;
     private List<Product> productList;
@@ -109,6 +111,8 @@ public class HomeFragment extends Fragment {
 
         sendButton = rootView.findViewById(R.id.product_send_text);
         productEditText = rootView.findViewById(R.id.product_edit_text);
+        productEditQuantity = rootView.findViewById(R.id.product_edit_quantity);
+        productEditPrice = rootView.findViewById(R.id.product_edit_price);
         productEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -134,7 +138,10 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Product obj = new Product();
 //                obj.image = drw_arr.getResourceId(randomNum, -1);
+                obj.position = 1;
                 obj.name = productEditText.getText().toString();
+                obj.quantity = Double.parseDouble(productEditQuantity.getText().toString());
+                obj.price = Double.parseDouble(productEditPrice.getText().toString());
 //                obj.imageDrw = getActivity().getResources().getDrawable(obj.image);
 //                items.add(0, obj);
 //                mAdapter.notifyDataSetChanged();
@@ -143,6 +150,8 @@ public class HomeFragment extends Fragment {
                 myRef.push().setValue(obj);
                 // clear edittext
                 productEditText.setText("");
+                productEditQuantity.setText("");
+                productEditPrice.setText("");
             }
         });
 
@@ -199,7 +208,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override

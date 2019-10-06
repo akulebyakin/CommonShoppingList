@@ -19,6 +19,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import pro.kulebyakin.commonshoppinglist.R;
 import pro.kulebyakin.commonshoppinglist.helpers.DragItemTouchHelper;
 import pro.kulebyakin.commonshoppinglist.helpers.SwipeItemTouchHelper;
+import pro.kulebyakin.commonshoppinglist.helpers.ProductTouchHelper;
 import pro.kulebyakin.commonshoppinglist.models.Product;
 import pro.kulebyakin.commonshoppinglist.utils.Tools;
 
@@ -27,7 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdapter.OriginalViewHolder>
-        implements SwipeItemTouchHelper.SwipeHelperAdapter, DragItemTouchHelper.MoveHelperAdapter  {
+        implements SwipeItemTouchHelper.SwipeHelperAdapter, DragItemTouchHelper.MoveHelperAdapter {
 
     private List<Product> items = new ArrayList<>();
     private List<Product> items_swiped = new ArrayList<>();
@@ -73,17 +74,21 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
     public class OriginalViewHolder extends RecyclerView.ViewHolder implements SwipeItemTouchHelper.TouchViewHolder {
         public ImageView image;
         public TextView name;
-        public ImageButton bt_move;
+        public TextView quantity;
+        public TextView price;
         public Button bt_undo;
         public View lyt_parent;
+        public View ll;
 
         public OriginalViewHolder(View v) {
             super(v);
             image = (ImageView) v.findViewById(R.id.image);
             name = (TextView) v.findViewById(R.id.name);
-            bt_move = (ImageButton) v.findViewById(R.id.bt_move);
+            quantity = (TextView) v.findViewById(R.id.quantity);
+            price = (TextView) v.findViewById(R.id.price);
             bt_undo = (Button) v.findViewById(R.id.bt_undo);
             lyt_parent = (View) v.findViewById(R.id.lyt_parent);
+            ll = (View) v.findViewById(R.id.ll);
         }
 
         @Override
@@ -138,6 +143,8 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
 
             final Product p = items.get(position);
             view.name.setText(p.name);
+            view.quantity.setText(Double.toString(p.quantity));
+            view.price.setText(Double.toString(p.price) + " р");
 //            Tools.displayImageOriginal(ctx, view.image, p.image);
             view.lyt_parent.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -163,7 +170,7 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                 view.lyt_parent.setVisibility(View.VISIBLE);
             }
 
-            view.bt_move.setOnTouchListener(new View.OnTouchListener() {
+            view.lyt_parent.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN && mDragStartListener != null) {
@@ -172,12 +179,10 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
                     return false;
                 }
             });
-
-
         }
     }
 
-    public void deleteItem (int position) {
+    public void deleteItem(int position) {
         getSnapshots().getSnapshot(position).getRef().removeValue();
     }
 
@@ -190,7 +195,6 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
 
     @Override
     public void onItemDismiss(int position) {
-
 //         handle when double swipe
         if (items.get(position).swiped) {
             items_swiped.remove(items.get(position));
@@ -199,10 +203,8 @@ public class ProductAdapter extends FirebaseRecyclerAdapter<Product, ProductAdap
             notifyItemRemoved(position);
             return;
         }
-
         items.get(position).swiped = true;
         items_swiped.add(items.get(position));
         notifyItemChanged(position);
     }
-
 }
